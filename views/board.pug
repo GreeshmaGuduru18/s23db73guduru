@@ -15,9 +15,8 @@ block content
     p  Incorrect data entered.. For rows and columns, please enter integer values between 1 and 10. 
   else
     table#outer
-      - for(let i=0; i<rows; i++) {
-          tr#middle
-            - for(let j=0; j<cols; j++) {
-                td= 1 + i + j*rows
-            -}
-      - }
+      - for (let i = 0; i < rows; i++)
+        tr#middle
+          - for (let j = 0; j < cols; j++)
+            - let value = (i === j) ? 1 : (i === j + 1) ? 2 : (i === j - 1) ? i : 0
+            td= value

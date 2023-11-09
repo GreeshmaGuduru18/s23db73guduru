@@ -11,14 +11,14 @@ block content
           p director: #{movie.director}
           p Rating: #{movie.rating}
   br
-  h5= 'Buy'
+  //- h5= 'Buy'
 
-  div(class="container-fluid")
-    each movie,index in results
-      div(class="row", onclick=`buy(${index})`)
-        div(class="col-sm-2") <br>movie #{index}: #{movie.movie_name} director:#{movie.director} Rating:#{movie.rating}
-  script.
-        function buy(price){
-          alert('You purchased item ' + price)
+  //- div(class="container-fluid")
+  //-   each movie,index in results
+  //-     div(class="row", onclick=`buy(${index})`)
+  //-       div(class="col-sm-2") <br>movie #{index}: #{movie.movie_name} director:#{movie.director} Rating:#{movie.rating}
+  //- script.
+  //-       function buy(price){
+  //-         alert('You purchased item ' + price)
         
-        }
+  //-       }

@@ -7,11 +7,11 @@ const moviesData = [
   { movie_name: 'pookri', director: 'puri', rating: 4.5 },
   { movie_name: 'bhubali', director: 'mouli', rating: 4.2 },
   { movie_name: 'dookudu', director: 'sreenu', rating: 4.9 },
-  // Add more restaurant data here
+  // Add more movies data here
 ];
 
 router.get('/', (req, res) => {
-  // Render the 'movies' Pug template with the restaurant data
+  // Render the 'movies' Pug template with the movies data
   res.render('movies', { title: 'Search Results - Movies', results: moviesData });
 
 });

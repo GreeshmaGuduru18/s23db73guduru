@@ -18,5 +18,6 @@ router.get('/', (req, res) => {
 
 /* GET home page. */
 router.get('/', movies_controlers.movies_view_all_Page);
-
+router.get('/movies/:id', movies_controlers.movies_detail);
 module.exports = router;
+

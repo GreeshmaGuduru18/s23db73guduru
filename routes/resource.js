@@ -21,7 +21,7 @@ router.get('/movies/:id', movies_controller.movies_detail);
 router.get('/movies', movies_controller.movies_list);
 module.exports = router;t
 
-Handle movies update form on PUT.
+//Handle movies update form on PUT.
 exports.movies_update_put = async function(req, res) {
 console.log(`update on id ${req.params.id} with body
 ${JSON.stringify(req.body)}`)

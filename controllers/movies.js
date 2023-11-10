@@ -40,13 +40,13 @@ exports.movies_detail = function (req, res) {
 //     res.send('NOT IMPLEMENTED: movies create POST');
 //  };
 
-  // Handle Movies delete form on DELETE.
+// Handle Movies delete form on DELETE.
 exports.movies_delete = function (req, res) {
     res.send('NOT IMPLEMENTED: movies delete DELETE ' + req.params.id);
 };
 
 // Handle Movies update form on PUT.
-exports.movies_update_put = function(req, res) {
+exports.movies_update_put = function (req, res) {
     res.send('NOT IMPLEMENTED: movies update PUT' + req.params.id);
 };
 
@@ -72,13 +72,34 @@ exports.movies_create_post = async function (req, res) {
     }
 };
 
-exports.movies_detail = async function(req, res) {
+exports.movies_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-    result = await movies.findById( req.params.id)
-    res.send(result)
+        result = await movies.findById(req.params.id)
+        res.send(result)
     } catch (error) {
-    res.status(500)
-    res.send(`{"error": document for id ${req.params.id} not found`);
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
     }
-    };
+};
+
+
+exports.movies_update_put = async function (req, res) {
+    console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await movies.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.movie_name)
+            toUpdate.movie_name = req.body.movie_name;
+        if (req.body.director) toUpdate.director = req.body.director;
+        if (req.body.rating) toUpdate.rating = req.body.rating;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+    }
+};

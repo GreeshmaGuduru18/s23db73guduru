@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+
+  - if (toShow)
+    - let moviesid = toShow._id
+    - let movie_name = toShow.movie_name
+    - let director = toShow.director
+    - let rating = toShow.rating
+
+    div
+      div.row
+        div(class='moviesAttr mr-3') movies ID is:
+        div #{moviesid}
+      div.row
+        div(class='moviesAttr mr-3') movies name is:
+        div #{movie_name}
+      div.row
+        div(class='moviesAttr mr-3') movies director is:
+        div #{director}
+      div.row
+        div(class='moviesAttr mr-3') movies rating is:
+        div #{rating}
+  - else
+    p Error: toShow is null or undefined
+

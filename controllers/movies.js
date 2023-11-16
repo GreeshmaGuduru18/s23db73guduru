@@ -103,3 +103,72 @@ ${JSON.stringify(req.body)}`)
 failed`);
     }
 };
+
+// Handle movies delete on DELETE.
+exports.movies_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await movies.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
+
+   // Handle a show one view with id specified by query
+exports.movies_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await movies.findById( req.query.id)
+    res.render('moviesdetail',
+   { title: 'movies Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // Handle building the view for creating a movies.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.movies_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+    res.render('moviescreate', { title: 'movies Create'});
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // Handle building the view for updating a movies.
+// query provides the id
+exports.movies_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await movies.findById(req.query.id)
+    res.render('moviesupdate', { title: 'movies Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // Handle a delete one view with id from query
+exports.movies_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await movies.findById(req.query.id)
+    res.render('moviesdelete', { title: 'movies Delete', toShow:
+   result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };

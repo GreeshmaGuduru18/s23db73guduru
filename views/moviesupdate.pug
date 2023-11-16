@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+  - if (toShow)
+    - let moviesid = toShow._id
+    - let movies_type = toShow.movies_type
+    - let moviesrating = toShow.rating
+    - let moviesdirector = toShow.director
+
+    div.row(class='mb-2')
+      div.col-12
+        div.card.bg-info
+          div.card-body
+            div.mr-1 ID is
+            div #{moviesid}
+            - let actionid = "/resource/movies/" + moviesid
+            form(id='moviesForm', action=actionid, method="PUT")
+              div.form-group
+                label(for='movie_name') movies name 
+                input#movie_name.form-control(type='text', name='movie_name', value=movie_name)
+              div.form-group
+                label(for='director') movies director
+                input#director.form-control(type='text', name='director', value=moviesdirector)
+              div.form-group
+                label(for='rating') movies rating
+                input#rating.form-control(type='number', name='rating', value=moviesrating)
+              button.btn.btn-primary(type="submit") Update
+            script.
+              document.getElementById('moviesForm').addEventListener('submit', (event) => {
+                event.preventDefault();
+                // TODO do something here to show the user that the form is being submitted
+                fetch(event.target.action, {
+                  method: 'PUT',
+                  body: new URLSearchParams(new FormData(event.target)), // event.target is the form
+                }).then((resp) => {
+                  return resp.text(); // or resp.text() or whatever the server sends
+                }).then((body) => {
+                  alert("Update succeeded");
+                  // TODO handle body
+                }).catch((error) => {
+                  // TODO handle error
+                  alert("Update failed " + error);
+                });
+              });
+  - else
+    p ToShow is null or undefined. Please handle this case appropriately.

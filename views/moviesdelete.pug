@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let moviesid = toShow._id
+    - let movie_name = toShow.movie_name
+    - let moviesdirector = toShow.director
+    - let moviesrating = toShow.rating
+    - let actionid = "/resource/movies/" + moviesid
+
+    script.
+      let actionid = "#{actionid}";
+
+    div
+      div.row
+        div(class='moviesAttr mr-3') movies ID is:
+        div #{moviesid}
+      div.row
+        div(class='moviesAttr mr-3') movies name is:
+        div #{movie_name}
+      div.row
+        div(class='moviesAttr mr-3') movies director is:
+        div #{moviesdirector}
+      div.row
+        div(class='moviesAttr mr-3') movies rating is:
+        div #{moviesrating}
+
+      button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+    script.
+      function cancel() {
+        // Go back to the home page for the movies collection
+        window.location.href='/movies';
+      }
+
+      function deleteOnid() {
+        console.log("starting delete");
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.text (); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeeded");
+          window.location.href='/movies';
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed " + error );
+        });
+      }

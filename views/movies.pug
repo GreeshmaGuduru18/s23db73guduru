@@ -2,23 +2,24 @@ extends layout
 
 block content
   h1= title
-  .container-fluid
-    .row
-      - for (let movie of results)
-        .col-sm-2
-          h2= movie.movie_name
-          p movie name: #{movie.movie_name}
-          p director: #{movie.director}
-          p Rating: #{movie.rating}
-  br
-  //- h5= 'Buy'
+  - let movie = results
+  div(class="container-fluid")
+    div(class="row m-1")
+      each item in results
+        - let destination1 = `dispatch("/movie/update?id=${item._id}")`
+        - let destination2 = `dispatch("/movie/create")`
+        - let destination3 = `dispatch("/movie/detail?id=${item._id}")`
+        - let destination4 = `dispatch("/movie/delete?id=${item._id}")`
+        div(class="row-sm-2 m-1") 
+          | movie name : #{item.movie_name}, 
+          | movie address: #{item.address}, 
+          | movie rating: #{item.rating}
+          //- button.btn(class="btn-primary ml-1", onclick= destination2) Create 
+          button.btn(class="btn-primary ml-1", onclick= destination1) Update 
+          //- button.btn(class="btn-primary ml-1", onclick= destination3) Detail
+          //- button.btn(class="btn-primary ml-1", onclick= destination4) Delete
 
-  //- div(class="container-fluid")
-  //-   each movie,index in results
-  //-     div(class="row", onclick=`buy(${index})`)
-  //-       div(class="col-sm-2") <br>movie #{index}: #{movie.movie_name} director:#{movie.director} Rating:#{movie.rating}
-  //- script.
-  //-       function buy(price){
-  //-         alert('You purchased item ' + price)
-        
-  //-       }
+  script.
+    function dispatch(path) {
+      window.location.href = path;
+    }

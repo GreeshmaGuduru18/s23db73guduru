@@ -27,21 +27,28 @@ block content
                 input#rating.form-control(type='number', name='rating', value=moviesrating)
               button.btn.btn-primary(type="submit") Update
             script.
-              document.getElementById('moviesForm').addEventListener('submit', (event) => {
+              document.forms['moviesForm'].addEventListener('submit', (event) => {
                 event.preventDefault();
-                // TODO do something here to show the user that the form is being submitted
+                // TODO do something here to show user that form is being submitted
                 fetch(event.target.action, {
                   method: 'PUT',
-                  body: new URLSearchParams(new FormData(event.target)), // event.target is the form
+                  body: new URLSearchParams(new FormData(event.target)) // event.target is the form
                 }).then((resp) => {
-                  return resp.text(); // or resp.text() or whatever the server sends
+                  if(resp.ok){
+                      alert ("Movies Data Updated Successfully")
+                      document.getElementById('moviesForm').reset()
+                  }
+                  else {
+                      alert ("Failed to Update movies Data")
+                  }
                 }).then((body) => {
-                  alert("Update succeeded");
+                  console.log(body)
                   // TODO handle body
                 }).catch((error) => {
                   // TODO handle error
-                  alert("Update failed " + error);
+                  alert("Update failed " + error )
                 });
               });
+          // rest of the code...
   - else
     p ToShow is null or undefined. Please handle this case appropriately.

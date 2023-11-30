@@ -3,21 +3,22 @@ extends layout
 block content
   h1= title
   - let movie = results
+  - let destination = `dispatch("/movie/create")`
+  button.btn(class="btn-primary ml-1", onclick= destination) Create 
+
   div(class="container-fluid")
     div(class="row m-1")
       each item in results
-        - let destination1 = `dispatch("/movie/update?id=${item._id}")`
-        - let destination2 = `dispatch("/movie/create")`
-        - let destination3 = `dispatch("/movie/detail?id=${item._id}")`
-        - let destination4 = `dispatch("/movie/delete?id=${item._id}")`
+        - let destination1 = `dispatch("/movies/update?id=${item._id}")`
+        - let destination2 = `dispatch("/movie/detail?id=${item._id}")`
+        - let destination3 = `dispatch("/movie/delete?id=${item._id}")`
         div(class="row-sm-2 m-1") 
           | movie name : #{item.movie_name}, 
           | movie address: #{item.address}, 
           | movie rating: #{item.rating}
-          //- button.btn(class="btn-primary ml-1", onclick= destination2) Create 
           button.btn(class="btn-primary ml-1", onclick= destination1) Update 
-          //- button.btn(class="btn-primary ml-1", onclick= destination3) Detail
-          //- button.btn(class="btn-primary ml-1", onclick= destination4) Delete
+          button.btn(class="btn-primary ml-1", onclick= destination2) Detail
+          button.btn(class="btn-primary ml-1", onclick= destination3) Delete
 
   script.
     function dispatch(path) {

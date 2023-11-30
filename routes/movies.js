@@ -21,14 +21,17 @@ router.get('/', movies_controlers.movies_view_all_Page);
 router.get('/movies/:id', movies_controlers.movies_detail);
 module.exports = router;
 
-/* GET detail movies page */
-router.get('/detail', movies_controlers.movies_view_one_Page);
 
-/* GET create movies page */
-router.get('/create', movies_controlers.movies_create_Page);
+
+const secured = (req, res, next) => {
+ if (req.user){
+ return next();
+ }
+ res.redirect("/login");
+ }
 
 /* GET create update page */
-router.get('/update', movies_controlers.movies_update_Page);
-
-/* GET delete movies page */
-router.get('/delete', movies_controlers.movies_delete_Page);
+router.get('/update', secured, movies_controlers.movies_update_Page);
+router.get('/delete', secured, movies_controlers.movies_delete_Page);
+router.get('/create', secured, movies_controlers.movies_create_Page);
+router.get('/detail', secured, movies_controlers.movies_view_one_Page);
